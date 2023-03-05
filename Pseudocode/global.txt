@@ -1,0 +1,7 @@
+// Counting variable
+int readcount = 0;            // current number of reading processes
+
+// Binary semaphores
+semaphore shared = 1;         // for access to reading/writing shared memory
+semaphore rcmutex = 1;        // for access to updating `readcount`
+semaphore fifo_queue = 1;     // for avoiding starvation by maintaining FIFO order

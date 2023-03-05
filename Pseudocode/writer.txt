@@ -1,0 +1,16 @@
+Writer() {
+  .
+  .
+  .
+  wait(fifo_queue);           // wait in FIFO queue for it's turn
+  wait(shared);               // Request and Lock the shared resource
+  signal(fifo_queue);         // Exit from FIFO queue
+    
+  // Critical Section
+  // Writing is done here
+  
+  signal(shared);             // Release the shared resource
+  .
+  .
+  .
+}

@@ -1,0 +1,26 @@
+Reader() {
+  .
+  .
+  .
+  wait(fifo_queue);           // wait in FIFO queue for it's turn
+  wait(rcmutex);              // Request and Lock access to readcount to update it
+  readcount++;                // update number of reading processes
+  if(readcount == 1){         // if current process is the first reader
+    wait(shared);             // Lock the shared resource for all readers
+  }
+  signal(fifo_queue);         // Exit from FIFO queue
+  signal(rcmutex);            // Release access to readcount
+    
+  // Critical Section
+  // Reading done here
+
+  wait(rcmutex);               // Request and Lock access to readcount to update it
+  readcount--;                 // update number of reading processes
+  if(readcount == 0){          // if there are no readers left
+    signal(shared);            // Release the shared resource
+  }
+  signal(rcmutex);             // Release access to readcount
+  .
+  .
+  .
+}
